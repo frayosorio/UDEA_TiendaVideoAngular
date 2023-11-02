@@ -6,6 +6,7 @@ import { EmpresaService } from 'src/app/servicios/empresa.service';
 import { EmpresaEditarComponent } from '../empresa-editar/empresa-editar.component';
 import { Pais } from 'src/app/entidades/pais';
 import { PaisService } from 'src/app/servicios/pais.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-empresas',
@@ -64,7 +65,7 @@ export class EmpresasComponent implements OnInit {
   }
 
   public agregar() {
-    this.dialogService.open(EmpresaEditarComponent, {
+    const dialogRef = this.dialogService.open(EmpresaEditarComponent, {
       width: '600px',
       height: '500px',
       data: {
@@ -77,6 +78,24 @@ export class EmpresasComponent implements OnInit {
         paises: this.paises
       }
     });
+
+    dialogRef.afterClosed().subscribe(
+      datos => {
+        if (datos) {
+          this.empresaService.agregar(datos.empresa).subscribe(
+            respuesta => {
+              this.listar();
+              window.alert("Los datos de la Empresa fueron agregados");
+            },
+            (error: HttpErrorResponse) => {
+              window.alert(`Error agregando la Empresa: [${error.message}]`);
+            }
+          );
+        }
+      }, error => {
+        window.alert(error.message)
+      }
+    );
   }
 
   public modificar() {

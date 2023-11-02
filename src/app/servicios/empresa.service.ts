@@ -22,5 +22,8 @@ export class EmpresaService {
     return this.http.get<Empresa[]>(urlT);
   }
 
-  
+  public agregar(empresa: Empresa): Observable<Empresa> {
+    const urlT = `${this.url}/agregar`;
+    return this.http.post<Empresa>(urlT, empresa);
+  }
 }
