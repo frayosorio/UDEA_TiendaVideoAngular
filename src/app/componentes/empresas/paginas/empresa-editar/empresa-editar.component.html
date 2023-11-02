@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Editando Empresa</h1>
+<div mat-dialog-content>
+    <p>{{datos.encabezado}}</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="datos.empresa.nombre">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>País</mat-label>
+        <mat-select [(value)]="datos.empresa.pais!.id">
+            <mat-option *ngFor="let p of datos.paises" [value]="p.id">
+                {{ p.nombre }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
